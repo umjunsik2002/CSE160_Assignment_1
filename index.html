@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Draw a blue rectangle (canvas version)</title>
+  </head>
+  <body onload="main()">
+    <canvas id="example" width="400" height="400"> 
+      Please use a browser that supports "canvas" 
+    </canvas>
+    <script src="asgn1.js"></script>
+    <script src="cuon-matrix-cse160.js"></script>
+    <br><br>
+    <input type="button" value="Clear Canvas" onClick="clearCanvas()"></input>
+    <br><br>
+    Drawing Mode:<br>
+    <input type="button" value="Squares" onClick="squares()"></input>
+    <input type="button" value="Triangles" onClick="triangles()"></input>
+    <input type="button" value="Circles" onClick="circles()"></input>
+    <br><br>
+    Shape Color: <input type="color" id="color" value="#808080" disabled /><br>
+    Red <input type="range" id="red" min="0" max="255" value="128" />
+    <input type="number" id="redValue" min="0" max="255" value="128" /><br>
+    Green <input type="range" id="green" min="0" max="255" value="128" />
+    <input type="number" id="greenValue" min="0" max="255" value="128" /><br>
+    Blue <input type="range" id="blue" min="0" max="255" value="128" />
+    <input type="number" id="blueValue" min="0" max="255" value="128" /><br>
+    <script>
+      const colorInput = document.getElementById('color');
+      const redRange = document.getElementById('red');
+      const greenRange = document.getElementById('green');
+      const blueRange = document.getElementById('blue');
+      const redValue = document.getElementById('redValue');
+      const greenValue = document.getElementById('greenValue');
+      const blueValue = document.getElementById('blueValue');
+      function checkColorValue(value) {
+        const parsedValue = parseInt(value);
+        return isNaN(parsedValue) ? 0 : Math.min(Math.max(parsedValue, 0), 255);
+      }
+      function updateColorValue(input, range) {
+        input.value = checkColorValue(parseInt(input.value));
+        range.value = input.value;
+      }
+      function updateColorPicker() {
+        const red = redRange.value;
+        const green = greenRange.value;
+        const blue = blueRange.value;
+        colorInput.value = '#' + componentToHex(red) + componentToHex(green) + componentToHex(blue);
+      }
+      function componentToHex(c) {
+        var hex = parseInt(c).toString(16);
+        return hex.length === 1 ? "0" + hex : hex;
+      }
+      redValue.addEventListener('change', function() {
+        updateColorValue(this, redRange);
+        updateColorPicker();
+      });
+      greenValue.addEventListener('change', function() {
+        updateColorValue(this, greenRange);
+        updateColorPicker();
+      });
+      blueValue.addEventListener('change', function() {
+        updateColorValue(this, blueRange);
+        updateColorPicker();
+      });
+      redRange.addEventListener('input', function() {
+        updateColorValue(this, redValue);
+        updateColorPicker();
+      });
+      greenRange.addEventListener('input', function() {
+        updateColorValue(this, greenValue);
+        updateColorPicker();
+      });
+      blueRange.addEventListener('input', function() {
+        updateColorValue(this, blueValue);
+        updateColorPicker();
+      });
+    </script>
+    <br>
+    Shape Size:
+    <input type="range" id="size" min="10" max="200" value="20" />
+    <input type="number" id="sizeValue" min="10" max="200" value="20" />
+    <br>
+    (Circles) Segment Count:
+    <input type="range" id="segment" min="8" max="32" value="32" />
+    <input type="number" id="segmentValue" min="8" max="32" value="32" />
+    <script>
+      const sizeRange = document.getElementById('size');
+      const sizeValue = document.getElementById('sizeValue');
+      const segmentRange = document.getElementById('segment');
+      const segmentValue = document.getElementById('segmentValue');
+      function checkSizeValue(value) {
+        const parsedValue = parseInt(value);
+        return isNaN(parsedValue) ? 10 : Math.min(Math.max(parsedValue, 10), 200);
+      }
+      function updateSizeValue(input, range) {
+        input.value = checkSizeValue(parseInt(input.value));
+        range.value = input.value;
+      }
+      sizeValue.addEventListener('change', function() {
+        updateSizeValue(this, sizeRange);
+      });
+      sizeRange.addEventListener('input', function() {
+        updateSizeValue(this, sizeValue);
+      });
+      function checkSegmentValue(value) {
+        const parsedValue = parseInt(value);
+        return isNaN(parsedValue) ? 8 : Math.min(Math.max(parsedValue, 8), 32);
+      }
+      function updateSegmentValue(input, range) {
+        input.value = checkSegmentValue(parseInt(input.value));
+        range.value = input.value;
+      }
+      segmentValue.addEventListener('change', function() {
+        updateSegmentValue(this, segmentRange);
+      });
+      segmentRange.addEventListener('input', function() {
+        updateSegmentValue(this, segmentValue);
+      });
+    </script>
+  </body>
+</html>
